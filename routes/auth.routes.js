@@ -114,7 +114,7 @@ router.post('/login', (req, res, next) => {
    
 
 // GET  /auth/verify  -  Used to verify JWT stored on the client
-router.get('/verify', isAuthenticated, (req, res, next) => {       // <== CREATE NEW ROUTE
+router.get('/verify', isAuthenticated, (req, res, next) => {      
  
   // If JWT token is valid the payload gets decoded by the
   // isAuthenticated middleware and made available on `req.payload`

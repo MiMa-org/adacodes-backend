@@ -21,8 +21,8 @@ require("./config")(app);
 const allRoutes = require("./routes/index.routes");
 app.use("/api", allRoutes);
 
-//const sourceRouter = require("./routes/source.routes");
-//app.use("/api", isAuthenticated, sourceRouter);
+const serviceRouter = require("./routes/service.routes");
+app.use("/api", serviceRouter);
 
 const authRouter = require("./routes/auth.routes");
 app.use("/auth", authRouter);  
