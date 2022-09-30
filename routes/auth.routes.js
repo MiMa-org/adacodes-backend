@@ -10,7 +10,7 @@ const saltRounds = 10;
 
 ///// SIGN UP /////
 router.post('/signup', (req, res, next) => {
-    const { email, password, username } = req.body;
+    const { email, password, username, isAdmin } = req.body;
 
     if (email === '' || password === '' || username === '') {
     res.status(400).json({ message: "Provide email, password and name" });
@@ -43,15 +43,15 @@ router.post('/signup', (req, res, next) => {
 
     // Create the new user in the database
     // We return a pending promise, which allows us to chain another `then` 
-    return User.create({ email, password: hashedPassword, username });
+    return User.create({ email, password: hashedPassword, username, isAdmin });
   })
   .then((createdUser) => {
     // Deconstruct the newly created user object to omit the password
     // We should never expose passwords publicly
-    const { email, username, _id } = createdUser;
+    const { email, username, isAdmin, _id } = createdUser;
   
     // Create a new object that doesn't expose the password
-    const user = { email, username, _id };
+    const user = { email, username, isAdmin, _id };
 
     // Send a json response containing the user object
     res.status(201).json({ user: user });
@@ -89,10 +89,10 @@ router.post('/login', (req, res, next) => {
    
         if (passwordCorrect) {
           // Deconstruct the user object to omit the password
-          const { _id, email, username } = foundUser;
+          const { _id, email, username, isAdmin } = foundUser;
           
           // Create an object that will be set as the token payload
-          const payload = { _id, email, username };
+          const payload = { _id, email, username, isAdmin };
    
           // Create and sign the token
           const authToken = jwt.sign( 
