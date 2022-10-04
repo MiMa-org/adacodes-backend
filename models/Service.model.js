@@ -15,6 +15,7 @@ const serviceSchema = new Schema({
   isApproved: { type: Boolean, default: false },
   latitude: { type: Number },
   longitude: { type: Number },
+  coordinates: { type: Number, type: Number },
   date: { type: String },
   time: { type: String }
 });
