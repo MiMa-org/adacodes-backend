@@ -16,7 +16,6 @@ router.post('/services', (req, res, next) => {
 //  GET /api/services -  Retrieves all of the services
 router.get("/services", (req, res, next) => {
   Service.find()
-    .populate("tasks")
     .then((allServices) => res.json(allServices))
     .catch((err) => res.json(err));
 });
@@ -29,7 +28,14 @@ router.get("/services/:serviceId", (req, res, next) => {
     res.status(400).json({ message: "Specified id is not valid" });
     return;
   }
+
+  Service.findById(serviceId)
+  .then((oneService) => res.json(oneService))
+  .catch((error) => res.json(error));
 });
+
+
+
 
 // PUT  /api/services/:serviceId  -  Updates a specific service by id
 router.put("/services/:serviceId", (req, res, next) => {
